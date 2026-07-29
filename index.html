@@ -3,174 +3,409 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#241A15">
 <title>web4you — Sites web pour les ateliers et commerces de Montréal</title>
 <meta name="description" content="Je construis le site avant de vous le présenter. Sites web pour ébénistes, cordonniers, traiteurs et commerces de quartier à Montréal. Français et anglais.">
+<meta property="og:title" content="web4you — Sites web pour les ateliers de Montréal">
+<meta property="og:description" content="Je construis le site avant de vous le montrer. Prix fixes, aucun abonnement, le code vous appartient.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://diegocrisafu.github.io/web4you/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --walnut:#241A15;--walnut-2:#31241D;--maple:#E4D9C6;--maple-dim:#B9AC97;
-  --blueprint:#4E93C4;--brass:#C9A227;--rule:rgba(228,217,198,.16);
+  --walnut:#241A15;--walnut-2:#2C211A;--walnut-3:#342720;
+  --maple:#E9DFCE;--maple-dim:#BFB29D;
+  --blueprint:#5D9FCE;--blueprint-dim:rgba(93,159,206,.32);
+  --brass:#CFA92F;
+  --rule:rgba(233,223,206,.14);--rule-soft:rgba(233,223,206,.08);
   --display:'Archivo',system-ui,sans-serif;
   --body:'Newsreader',Georgia,serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.33,1,.68,1);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 body{margin:0;background:var(--walnut);color:var(--maple);
-  font-family:var(--body);font-size:1.06rem;line-height:1.68;-webkit-font-smoothing:antialiased}
+  font-family:var(--body);font-size:1.06rem;line-height:1.68;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
-.wrap{width:100%;max-width:1060px;margin:0 auto;padding:0 clamp(1.15rem,4vw,2.5rem)}
-.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--blueprint);margin:0 0 1.1rem}
+::selection{background:var(--blueprint);color:var(--walnut)}
+.wrap{width:100%;max-width:1100px;margin:0 auto;padding:0 clamp(1.15rem,4vw,2.5rem)}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--blueprint);margin:0 0 1.2rem;
+  display:flex;align-items:center;gap:.8rem}
+.eyebrow::before{content:"";width:2rem;height:1px;background:var(--blueprint);flex:none}
 
+.skip{position:absolute;left:-999px;top:0;background:var(--blueprint);color:var(--walnut);
+  font-family:var(--mono);font-size:.75rem;padding:.7rem 1.2rem;z-index:100}
+.skip:focus{left:0}
+
+/* ---------- nav ---------- */
+.nav-shell{position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb,var(--walnut) 86%,transparent);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--rule)}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:1.2rem;
-  padding:1.6rem 0 1.1rem;border-bottom:1px solid var(--rule);flex-wrap:wrap}
-.mark{font-family:var(--display);font-weight:900;font-size:1.15rem;letter-spacing:.02em}
+  padding:.95rem 0;flex-wrap:wrap}
+.mark{font-family:var(--display);font-weight:900;font-size:1.15rem;letter-spacing:.02em;
+  text-decoration:none}
 .mark b{color:var(--blueprint)}
-.langs{display:flex;gap:.35rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em}
-.langs button{background:none;border:1px solid var(--rule);color:var(--maple-dim);
-  font:inherit;padding:.35rem .7rem;cursor:pointer;text-transform:uppercase}
-.langs button[aria-pressed="true"]{border-color:var(--blueprint);color:var(--walnut);
-  background:var(--blueprint);font-weight:500}
-.langs button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.nav-right{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.nav-links{display:flex;gap:1.4rem;font-family:var(--mono);font-size:.72rem;
+  letter-spacing:.12em;text-transform:uppercase}
+.nav-links a{text-decoration:none;color:var(--maple-dim);position:relative;
+  padding:.3rem 0;transition:color .2s var(--ease)}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;
+  background:var(--blueprint);transform:scaleX(0);transform-origin:left;
+  transition:transform .25s var(--ease)}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--maple)}
+.nav-links a:hover::after,.nav-links a:focus-visible::after{transform:scaleX(1)}
+.langs{display:flex;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;
+  border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+.langs button{background:none;border:0;color:var(--maple-dim);
+  font:inherit;padding:.42rem .75rem;cursor:pointer;text-transform:uppercase;
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.langs button:hover{color:var(--maple)}
+.langs button[aria-pressed="true"]{color:var(--walnut);background:var(--blueprint);font-weight:500}
+.langs button:focus-visible{outline:2px solid var(--brass);outline-offset:-2px}
+@media(max-width:640px){.nav-links{display:none}}
 
-.hero{padding:clamp(3rem,7vw,5rem) 0 clamp(2rem,4vw,3rem)}
-h1{font-family:var(--display);font-weight:900;font-size:clamp(2.1rem,5.4vw,3.5rem);
-  line-height:1.0;letter-spacing:-.022em;margin:0 0 1.5rem;max-width:22ch}
+/* ---------- hero ---------- */
+.hero{position:relative;padding:clamp(3.2rem,7vw,5.5rem) 0 clamp(2.6rem,5vw,4rem)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--rule-soft) 1px,transparent 1px),
+    linear-gradient(90deg,var(--rule-soft) 1px,transparent 1px);
+  background-size:52px 52px;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 82%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 82%)}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+  gap:clamp(2rem,5vw,4rem);align-items:center}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(2.15rem,5.2vw,3.6rem);
+  line-height:1.02;letter-spacing:-.022em;margin:0 0 1.5rem;max-width:22ch;text-wrap:balance}
 h1 .blue{color:var(--blueprint)}
-.lede{font-size:1.16rem;color:var(--maple-dim);max-width:52ch;margin:0 0 2.2rem}
-.cta-row{display:flex;gap:.8rem;flex-wrap:wrap}
-.btn{display:inline-block;font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;
-  text-transform:uppercase;text-decoration:none;padding:.85rem 1.5rem;
-  border:1px solid var(--blueprint);color:var(--maple);transition:background .2s,color .2s}
+.lede{font-size:1.16rem;color:var(--maple-dim);max-width:52ch;margin:0 0 2.1rem}
+.cta-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.9rem}
+.btn{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);
+  font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  padding:.9rem 1.55rem;border:1px solid var(--blueprint);color:var(--maple);
+  cursor:pointer;border-radius:2px;
+  transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+.btn svg{width:.85em;height:.85em;flex:none;transition:transform .2s var(--ease)}
 .btn:hover,.btn:focus-visible{background:var(--blueprint);color:var(--walnut)}
+.btn:hover svg,.btn:focus-visible svg{transform:translateX(3px)}
 .btn-solid{background:var(--blueprint);color:var(--walnut);font-weight:500}
 .btn-solid:hover,.btn-solid:focus-visible{background:var(--maple);border-color:var(--maple)}
+.btn:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.chips{display:flex;gap:.55rem;flex-wrap:wrap;font-family:var(--mono);font-size:.66rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--maple-dim)}
+.chips > span{border:1px solid var(--rule);border-radius:2rem;padding:.34rem .8rem;
+  display:inline-flex;align-items:center;gap:.45rem}
+.chips i{width:5px;height:5px;border-radius:50%;background:var(--brass);flex:none}
 
-.section{padding:clamp(2.75rem,5.5vw,4.25rem) 0;border-top:1px solid var(--rule)}
-h2{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,2.6vw,1.75rem);
-  letter-spacing:-.01em;line-height:1.14;margin:0 0 1.5rem}
+/* the measured drawing */
+.draw{width:100%;height:auto;display:block}
+.draw text{font-family:var(--mono);fill:var(--blueprint);font-size:11px;letter-spacing:.08em}
+.draw .cap{fill:var(--maple-dim);font-size:10px}
+.draw .frame{stroke:var(--maple-dim);fill:none;stroke-width:1.5}
+.draw .block{stroke:var(--maple-dim);fill:rgba(233,223,206,.03);stroke-width:1}
+.draw .accent{stroke:var(--brass);fill:rgba(207,169,47,.1);stroke-width:1}
+.draw .dim{stroke:var(--blueprint);stroke-width:1;fill:none}
+.draw .ext{stroke:var(--blueprint-dim);stroke-width:1;stroke-dasharray:3 4}
+.draw .dot{fill:var(--maple-dim)}
+@media(prefers-reduced-motion:no-preference){
+  .draw .anim{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.6s var(--ease) .3s forwards}
+  .draw .anim2{stroke-dasharray:900;stroke-dashoffset:900;animation:draw 2s var(--ease) .1s forwards}
+  .draw text{opacity:0;animation:fadein .6s ease 1.4s forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fadein{to{opacity:1}}
+}
+@media(max-width:860px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-fig{max-width:440px}
+}
+
+/* ---------- sections ---------- */
+.section{padding:clamp(3rem,6vw,4.75rem) 0;border-top:1px solid var(--rule);
+  scroll-margin-top:4.5rem}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(1.35rem,2.8vw,1.9rem);
+  letter-spacing:-.01em;line-height:1.14;margin:0 0 1.6rem;text-wrap:balance}
 h3{font-family:var(--display);font-weight:700;font-size:.95rem;letter-spacing:.03em;
   text-transform:uppercase;margin:0 0 .5rem}
 
-.how{list-style:none;margin:0;padding:0;counter-reset:s}
-.how li{display:grid;grid-template-columns:auto 1fr;gap:1.4rem;padding:1.3rem 0;
-  border-top:1px solid var(--rule);align-items:start}
-.how li:last-child{border-bottom:1px solid var(--rule)}
-.how .n{font-family:var(--mono);font-size:.78rem;color:var(--blueprint);padding-top:.3rem}
-.how p{margin:0;color:var(--maple-dim);max-width:58ch}
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(16px);
+  transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem}
-.card{border:1px solid var(--rule);background:var(--walnut-2);padding:1.5rem;
-  display:flex;flex-direction:column}
-.card.pick{border-color:var(--blueprint)}
-.card .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--brass);margin:0 0 .8rem;min-height:1em}
-.price{font-family:var(--display);font-weight:900;font-size:1.9rem;
-  line-height:1;margin:0 0 .3rem}
-.price small{font-family:var(--mono);font-weight:400;font-size:.65rem;
-  letter-spacing:.1em;color:var(--maple-dim);display:block;margin-top:.5rem}
-.card ul{list-style:none;margin:1.1rem 0 0;padding:0;font-size:.95rem;
-  color:var(--maple-dim);flex:1}
-.card li{padding-left:1.1rem;position:relative;margin-bottom:.45rem}
+/* ---------- demo showcase ---------- */
+.demo-link{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  border:1px solid var(--rule);background:var(--walnut-2);text-decoration:none;
+  border-radius:3px;overflow:hidden;cursor:pointer;
+  transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease)}
+.demo-link:hover,.demo-link:focus-visible{border-color:var(--blueprint);
+  transform:translateY(-3px);box-shadow:0 18px 40px -18px rgba(0,0,0,.6)}
+.demo-link:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.demo-thumb{background:var(--walnut-3);border-right:1px solid var(--rule);
+  padding:1.6rem;display:flex;align-items:center;justify-content:center;min-height:220px}
+.demo-thumb svg{width:100%;max-width:300px;height:auto}
+.demo-copy{padding:1.7rem 1.8rem 1.8rem}
+.demo-copy .meta{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--blueprint);margin-bottom:.8rem}
+.demo-copy p{margin:.5rem 0 1.2rem;color:var(--maple-dim);font-size:.97rem}
+.demo-copy .go{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--brass);display:inline-flex;align-items:center;gap:.5rem}
+.demo-copy .go svg{width:.9em;height:.9em;transition:transform .2s var(--ease)}
+.demo-link:hover .go svg{transform:translateX(4px)}
+@media(max-width:700px){
+  .demo-link{grid-template-columns:1fr}
+  .demo-thumb{border-right:0;border-bottom:1px solid var(--rule);min-height:170px}
+}
+
+/* ---------- how: measuring-tape steps ---------- */
+.how{list-style:none;margin:2.4rem 0 0;padding:0;counter-reset:s;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.how li{position:relative;padding:1.6rem 1.4rem 0 0;border-top:1px solid var(--rule)}
+.how li::before{content:"";position:absolute;top:-1px;left:0;width:1px;height:12px;
+  background:var(--blueprint)}
+.how .n{font-family:var(--mono);font-size:.72rem;color:var(--blueprint);
+  display:block;margin-bottom:.9rem}
+.how p{margin:0;color:var(--maple-dim);font-size:.97rem;max-width:30ch}
+@media(max-width:860px){
+  .how{grid-template-columns:1fr;gap:0}
+  .how li{border-top:0;border-left:1px solid var(--rule);padding:0 0 1.8rem 1.5rem}
+  .how li:last-child{padding-bottom:.3rem}
+  .how li::before{top:.35rem;left:-1px;width:12px;height:1px}
+}
+
+/* ---------- pricing ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.3rem;align-items:stretch}
+.card{position:relative;border:1px solid var(--rule);background:var(--walnut-2);
+  padding:1.7rem 1.6rem;display:flex;flex-direction:column;border-radius:3px;
+  transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease)}
+.card:hover{border-color:rgba(233,223,206,.3);transform:translateY(-3px);
+  box-shadow:0 18px 40px -20px rgba(0,0,0,.55)}
+.card.pick{border-color:var(--blueprint);background:
+  linear-gradient(180deg,rgba(93,159,206,.07),transparent 45%),var(--walnut-2)}
+.card.pick:hover{border-color:var(--blueprint);
+  box-shadow:0 18px 44px -18px rgba(93,159,206,.25)}
+.card .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--brass);margin:0 0 1rem;min-height:1em}
+.card.pick .tag{color:var(--walnut);background:var(--blueprint);align-self:flex-start;
+  padding:.3rem .7rem;border-radius:2px;font-weight:500}
+.price{font-family:var(--display);font-weight:900;font-size:2.15rem;
+  line-height:1;margin:0 0 .3rem;letter-spacing:-.02em}
+.price small{font-family:var(--mono);font-weight:400;font-size:.64rem;
+  letter-spacing:.1em;color:var(--maple-dim);display:block;margin-top:.55rem;
+  text-transform:uppercase}
+.card ul{list-style:none;margin:1.2rem 0 0;padding:1.2rem 0 0;font-size:.95rem;
+  color:var(--maple-dim);flex:1;border-top:1px solid var(--rule)}
+.card li{padding-left:1.2rem;position:relative;margin-bottom:.5rem}
 .card li::before{content:"—";position:absolute;left:0;color:var(--blueprint)}
+.fineprint{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;
+  color:var(--maple-dim);margin-top:1.7rem;line-height:1.9}
 
-.demo-link{display:block;border:1px solid var(--rule);background:var(--walnut-2);
-  padding:1.6rem;text-decoration:none;transition:border-color .2s}
-.demo-link:hover,.demo-link:focus-visible{border-color:var(--blueprint)}
-.demo-link .meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--blueprint);margin-bottom:.7rem}
-.demo-link p{margin:.4rem 0 0;color:var(--maple-dim);font-size:.97rem}
-
+/* ---------- about ---------- */
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);
   gap:clamp(1.5rem,4vw,3.2rem)}
 .two p{margin:0 0 1rem;max-width:60ch}
 .two p:last-child{margin-bottom:0}
+.two p em{color:var(--maple)}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
 
-.coords{font-family:var(--mono);font-size:.85rem;line-height:2.1;letter-spacing:.03em}
-.coords a{color:var(--blueprint);text-decoration:none}
-.coords a:hover{text-decoration:underline}
+/* ---------- contact panel ---------- */
+.panel{position:relative;border:1px solid var(--rule);background:var(--walnut-2);
+  border-radius:3px;padding:clamp(1.8rem,4.5vw,3rem);
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(1.6rem,4vw,3rem);align-items:center}
+.panel::before,.panel::after{content:"";position:absolute;width:18px;height:18px;
+  border:1px solid var(--blueprint);pointer-events:none}
+.panel::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.panel::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.panel h2{margin-bottom:.8rem}
+.panel .sub{color:var(--maple-dim);margin:0 0 1.6rem;max-width:44ch}
+.coords{font-family:var(--mono);font-size:.82rem;line-height:2.3;letter-spacing:.03em;
+  margin:0}
+.coords dd{margin:0}
+.coords .k{color:var(--maple-dim);display:inline-block;min-width:6.5em}
+.coords a{color:var(--blueprint);text-decoration:none;border-bottom:1px solid transparent;
+  transition:border-color .2s var(--ease)}
+.coords a:hover,.coords a:focus-visible{border-color:var(--blueprint)}
+@media(max-width:820px){.panel{grid-template-columns:1fr}}
 
-footer{border-top:1px solid var(--rule);padding:1.9rem 0 2.6rem;font-family:var(--mono);
-  font-size:.7rem;letter-spacing:.08em;color:var(--maple-dim);
+footer{border-top:1px solid var(--rule);padding:2rem 0 2.7rem;font-family:var(--mono);
+  font-size:.68rem;letter-spacing:.1em;color:var(--maple-dim);
   display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;text-transform:uppercase}
 
 [data-en]{display:none}
 html[lang="en"] [data-fr]{display:none}
 html[lang="en"] [data-en]{display:revert}
-
-@media(max-width:820px){.two{grid-template-columns:1fr}}
 </style>
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
 
-<header class="wrap">
-  <nav class="nav">
-    <div class="mark">web<b>4</b>you</div>
-    <div class="langs" role="group" aria-label="Langue / Language">
-      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
-      <button type="button" data-lang="en" aria-pressed="false">EN</button>
-    </div>
-  </nav>
-</header>
+<a class="skip" href="#main"><span data-fr>Aller au contenu</span><span data-en>Skip to content</span></a>
 
-<main>
-<section class="hero wrap">
-  <p class="eyebrow">
-    <span data-fr>Montréal · Français et anglais</span>
-    <span data-en>Montreal · English and French</span>
-  </p>
-  <h1>
-    <span data-fr>Je construis le site <span class="blue">avant</span> de vous le montrer.</span>
-    <span data-en>I build the site <span class="blue">before</span> I show it to you.</span>
-  </h1>
-  <p class="lede">
-    <span data-fr>Pas de présentation, pas de contrat à signer pour voir quelque chose. Je passe à l'atelier avec une maquette réelle de votre commerce sur mon téléphone. Vous regardez, vous me dites ce qui ne va pas. Si ça ne vous intéresse pas, vous n'avez rien perdu.</span>
-    <span data-en>No pitch deck, no contract before you see anything. I come by the shop with a real working mockup of your business on my phone. You look at it and tell me what's wrong with it. If you're not interested, you've lost nothing.</span>
-  </p>
-  <div class="cta-row">
-    <a class="btn btn-solid" href="demos/ebenisterie.html">
-      <span data-fr>Voir une démo</span><span data-en>See a demo</span>
-    </a>
-    <a class="btn" href="#tarifs"><span data-fr>Tarifs</span><span data-en>Pricing</span></a>
+<div class="nav-shell">
+  <header class="wrap">
+    <nav class="nav" aria-label="Navigation">
+      <a class="mark" href="#top">web<b>4</b>you</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#demo"><span data-fr>Démo</span><span data-en>Demo</span></a>
+          <a href="#tarifs"><span data-fr>Tarifs</span><span data-en>Pricing</span></a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="langs" role="group" aria-label="Langue / Language">
+          <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>
+
+<main id="main">
+<section class="hero wrap" id="top">
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow">
+        <span data-fr>Montréal · Français et anglais</span>
+        <span data-en>Montreal · English and French</span>
+      </p>
+      <h1>
+        <span data-fr>Je construis le site <span class="blue">avant</span> de vous le montrer.</span>
+        <span data-en>I build the site <span class="blue">before</span> I show it to you.</span>
+      </h1>
+      <p class="lede">
+        <span data-fr>Pas de présentation, pas de contrat à signer pour voir quelque chose. Je passe à l'atelier avec une maquette réelle de votre commerce sur mon téléphone. Vous regardez, vous me dites ce qui ne va pas. Si ça ne vous intéresse pas, vous n'avez rien perdu.</span>
+        <span data-en>No pitch deck, no contract before you see anything. I come by the shop with a real working mockup of your business on my phone. You look at it and tell me what's wrong with it. If you're not interested, you've lost nothing.</span>
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="demos/ebenisterie.html">
+          <span data-fr>Voir une démo</span><span data-en>See a demo</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5"/></svg>
+        </a>
+        <a class="btn" href="#tarifs"><span data-fr>Tarifs</span><span data-en>Pricing</span></a>
+      </div>
+      <p class="chips" aria-label="Points clés">
+        <span><i></i><span data-fr>Prix fixes</span><span data-en>Fixed prices</span></span>
+        <span><i></i>FR·EN</span>
+        <span><i></i><span data-fr>Code à vous</span><span data-en>You own the code</span></span>
+      </p>
+    </div>
+
+    <figure class="hero-fig" style="margin:0">
+      <svg class="draw" viewBox="0 0 460 360" role="img"
+           aria-label="Dessin technique coté d'un site web / measured technical drawing of a website">
+        <!-- extension lines -->
+        <line class="ext" x1="70" y1="60" x2="70" y2="322"/>
+        <line class="ext" x1="390" y1="60" x2="390" y2="322"/>
+        <line class="ext" x1="52" y1="70" x2="52" y2="290"/>
+        <line class="ext" x1="70" y1="70" x2="408" y2="70"/>
+        <line class="ext" x1="390" y1="290" x2="408" y2="290"/>
+        <!-- browser frame -->
+        <rect class="frame anim2" x="70" y="70" width="320" height="220" rx="6"/>
+        <line class="frame anim" x1="70" y1="98" x2="390" y2="98"/>
+        <circle class="dot" cx="86" cy="84" r="3"/>
+        <circle class="dot" cx="98" cy="84" r="3"/>
+        <circle class="dot" cx="110" cy="84" r="3"/>
+        <!-- page blocks -->
+        <rect class="block anim" x="92" y="118" width="150" height="14" rx="2"/>
+        <rect class="block anim" x="92" y="140" width="110" height="9" rx="2"/>
+        <rect class="accent anim" x="92" y="162" width="86" height="22" rx="2"/>
+        <rect class="block anim2" x="92" y="202" width="86" height="66" rx="2"/>
+        <rect class="block anim2" x="187" y="202" width="86" height="66" rx="2"/>
+        <rect class="block anim2" x="282" y="202" width="86" height="66" rx="2"/>
+        <rect class="block anim" x="282" y="118" width="86" height="66" rx="2"/>
+        <!-- horizontal dimension -->
+        <line class="dim anim" x1="70" y1="316" x2="390" y2="316"/>
+        <path class="dim" d="M70 316l7 -3.5v7zM390 316l-7 -3.5v7z" fill="currentColor"/>
+        <text x="230" y="337" text-anchor="middle">1440</text>
+        <!-- vertical dimension -->
+        <line class="dim anim" x1="46" y1="70" x2="46" y2="290"/>
+        <path class="dim" d="M46 70l-3.5 7h7zM46 290l-3.5 -7h7z"/>
+        <text x="36" y="184" text-anchor="middle" transform="rotate(-90 36 184)">900</text>
+        <!-- callout -->
+        <line class="ext" x1="368" y1="150" x2="418" y2="128"/>
+        <text class="cap" x="398" y="120">FR·EN</text>
+        <text class="cap" x="70" y="58">web4you — <tspan data-i18n-skip>plan n° 01</tspan></text>
+      </svg>
+      <figcaption class="eyebrow" style="margin:1.1rem 0 0">
+        <span data-fr>Dessiné à la main, codé à la main</span>
+        <span data-en>Hand-drawn, hand-coded</span>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
-<section class="section wrap">
-  <p class="eyebrow"><span data-fr>Démo</span><span data-en>Demo</span></p>
-  <h2><span data-fr>Un exemple complet</span><span data-en>A complete example</span></h2>
-  <a class="demo-link" href="demos/ebenisterie.html">
-    <div class="meta">Atelier Rivard — <span data-fr>ébénisterie (fictive)</span><span data-en>cabinetmaker (fictional)</span></div>
-    <h3><span data-fr>Site d'ébénisterie sur mesure</span><span data-en>Custom cabinetmaking site</span></h3>
-    <p>
-      <span data-fr>Plan d'atelier coté en page d'accueil, étapes du projet avec échéancier et paiements, réalisations par essence de bois, formulaire de devis. Fonctionne sur téléphone. Aucun plugin, aucun abonnement mensuel.</span>
-      <span data-en>Measured shop drawing on the landing page, project stages with timeline and payment schedule, past work sorted by wood species, quote form. Works on a phone. No plugins, no monthly subscription.</span>
-    </p>
+<section class="section wrap" id="demo">
+  <p class="eyebrow reveal"><span data-fr>Démo</span><span data-en>Demo</span></p>
+  <h2 class="reveal"><span data-fr>Un exemple complet</span><span data-en>A complete example</span></h2>
+  <a class="demo-link reveal" href="demos/ebenisterie.html">
+    <span class="demo-thumb" aria-hidden="true">
+      <!-- miniature cabinet elevation -->
+      <svg viewBox="0 0 300 190" fill="none">
+        <line x1="30" y1="30" x2="30" y2="160" stroke="rgba(93,159,206,.32)" stroke-dasharray="3 4"/>
+        <line x1="270" y1="30" x2="270" y2="160" stroke="rgba(93,159,206,.32)" stroke-dasharray="3 4"/>
+        <rect x="30" y="42" width="240" height="96" stroke="#BFB29D" stroke-width="1.5" rx="2"/>
+        <line x1="110" y1="42" x2="110" y2="138" stroke="#BFB29D"/>
+        <line x1="190" y1="42" x2="190" y2="138" stroke="#BFB29D"/>
+        <line x1="30" y1="90" x2="110" y2="90" stroke="#BFB29D"/>
+        <circle cx="100" cy="66" r="2.4" fill="#CFA92F"/>
+        <circle cx="100" cy="114" r="2.4" fill="#CFA92F"/>
+        <circle cx="180" cy="90" r="2.4" fill="#CFA92F"/>
+        <circle cx="260" cy="90" r="2.4" fill="#CFA92F"/>
+        <rect x="30" y="138" width="240" height="10" fill="rgba(233,223,206,.05)" stroke="#BFB29D"/>
+        <line x1="30" y1="160" x2="270" y2="160" stroke="#5D9FCE"/>
+        <path d="M30 160l7 -3.5v7zM270 160l-7 -3.5v7z" fill="#5D9FCE"/>
+        <text x="150" y="178" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#5D9FCE" letter-spacing=".08em">2440</text>
+        <text x="150" y="28" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#BFB29D" letter-spacing=".14em">ATELIER RIVARD</text>
+      </svg>
+    </span>
+    <span class="demo-copy">
+      <span class="meta">Atelier Rivard — <span data-fr>ébénisterie (fictive)</span><span data-en>cabinetmaker (fictional)</span></span>
+      <h3><span data-fr>Site d'ébénisterie sur mesure</span><span data-en>Custom cabinetmaking site</span></h3>
+      <p>
+        <span data-fr>Plan d'atelier coté en page d'accueil, étapes du projet avec échéancier et paiements, réalisations par essence de bois, formulaire de devis. Fonctionne sur téléphone. Aucun plugin, aucun abonnement mensuel.</span>
+        <span data-en>Measured shop drawing on the landing page, project stages with timeline and payment schedule, past work sorted by wood species, quote form. Works on a phone. No plugins, no monthly subscription.</span>
+      </p>
+      <span class="go">
+        <span data-fr>Ouvrir la démo</span><span data-en>Open the demo</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5"/></svg>
+      </span>
+    </span>
   </a>
 </section>
 
 <section class="section wrap">
-  <p class="eyebrow"><span data-fr>Déroulement</span><span data-en>How it works</span></p>
-  <h2><span data-fr>Quatre étapes</span><span data-en>Four steps</span></h2>
+  <p class="eyebrow reveal"><span data-fr>Déroulement</span><span data-en>How it works</span></p>
+  <h2 class="reveal"><span data-fr>Quatre étapes</span><span data-en>Four steps</span></h2>
   <ol class="how">
-    <li><span class="n">01</span><div>
+    <li class="reveal"><span class="n">01</span><div>
       <h3><span data-fr>Je construis</span><span data-en>I build</span></h3>
       <p><span data-fr>À partir de vos photos Google, de vos avis et de ce que vous faites. Trois heures de mon temps, zéro du vôtre.</span>
          <span data-en>From your Google photos, your reviews, and what you actually do. Three hours of my time, none of yours.</span></p>
     </div></li>
-    <li><span class="n">02</span><div>
+    <li class="reveal"><span class="n">02</span><div>
       <h3><span data-fr>Je passe vous voir</span><span data-en>I come by</span></h3>
       <p><span data-fr>Dix minutes à l'atelier. Vous regardez le site sur mon téléphone et vous me dites ce qui est faux.</span>
          <span data-en>Ten minutes at the shop. You look at the site on my phone and tell me what's wrong.</span></p>
     </div></li>
-    <li><span class="n">03</span><div>
+    <li class="reveal"><span class="n">03</span><div>
       <h3><span data-fr>On corrige</span><span data-en>We fix it</span></h3>
       <p><span data-fr>Vos vraies photos, vos vrais prix, votre vrai vocabulaire. C'est là que le site devient le vôtre.</span>
          <span data-en>Your real photos, your real prices, your own words. This is where it becomes your site.</span></p>
     </div></li>
-    <li><span class="n">04</span><div>
+    <li class="reveal"><span class="n">04</span><div>
       <h3><span data-fr>Mise en ligne</span><span data-en>It goes live</span></h3>
       <p><span data-fr>Sur votre propre nom de domaine, relié à votre fiche Google. Vous en êtes propriétaire — code inclus.</span>
          <span data-en>On your own domain name, linked to your Google listing. You own it outright, source code included.</span></p>
@@ -179,10 +414,10 @@ html[lang="en"] [data-en]{display:revert}
 </section>
 
 <section class="section wrap" id="tarifs">
-  <p class="eyebrow"><span data-fr>Tarifs</span><span data-en>Pricing</span></p>
-  <h2><span data-fr>Prix fixes, annoncés d'avance</span><span data-en>Fixed prices, stated up front</span></h2>
+  <p class="eyebrow reveal"><span data-fr>Tarifs</span><span data-en>Pricing</span></p>
+  <h2 class="reveal"><span data-fr>Prix fixes, annoncés d'avance</span><span data-en>Fixed prices, stated up front</span></h2>
   <div class="cards">
-    <div class="card">
+    <div class="card reveal">
       <p class="tag"><span data-fr>Fiche Google</span><span data-en>Google listing</span></p>
       <p class="price">150&nbsp;$<small><span data-fr>une seule fois</span><span data-en>one time</span></small></p>
       <ul>
@@ -192,7 +427,7 @@ html[lang="en"] [data-en]{display:revert}
         <li><span data-fr>Fait en une journée</span><span data-en>Done in a day</span></li>
       </ul>
     </div>
-    <div class="card pick">
+    <div class="card pick reveal">
       <p class="tag"><span data-fr>Le plus courant</span><span data-en>Most common</span></p>
       <p class="price">900&nbsp;$<small><span data-fr>une seule fois</span><span data-en>one time</span></small></p>
       <ul>
@@ -203,7 +438,7 @@ html[lang="en"] [data-en]{display:revert}
         <li><span data-fr>Hébergement gratuit la 1re année</span><span data-en>Free hosting, first year</span></li>
       </ul>
     </div>
-    <div class="card">
+    <div class="card reveal">
       <p class="tag"><span data-fr>Galerie de projets</span><span data-en>Project gallery</span></p>
       <p class="price">1 800&nbsp;$<small><span data-fr>une seule fois</span><span data-en>one time</span></small></p>
       <ul>
@@ -214,7 +449,7 @@ html[lang="en"] [data-en]{display:revert}
       </ul>
     </div>
   </div>
-  <p style="font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--maple-dim);margin-top:1.6rem">
+  <p class="fineprint reveal">
     <span data-fr>Hébergement après la première année : 60 $/an. Aucun abonnement obligatoire. Le code vous appartient.</span>
     <span data-en>Hosting after year one: $60/year. No mandatory subscription. The code is yours.</span>
   </p>
@@ -222,15 +457,15 @@ html[lang="en"] [data-en]{display:revert}
 
 <section class="section wrap">
   <div class="two">
-    <div>
+    <div class="reveal">
       <p class="eyebrow"><span data-fr>Qui je suis</span><span data-en>Who I am</span></p>
       <h2><span data-fr>Un étudiant, et je le dis</span><span data-en>A student, and I say so</span></h2>
     </div>
-    <div>
+    <div class="reveal">
       <p><span data-fr>Je m'appelle Diego. Je termine un baccalauréat en informatique à Concordia et je travaille comme développeur en stage chez McKesson. J'ai déjà écrit du code pour des simulateurs de vol chez CAE et des jumeaux numériques chez Presagis.</span>
          <span data-en>My name is Diego. I'm finishing a computer science degree at Concordia and working as a software development intern at McKesson. I've written code for flight simulators at CAE and digital twins at Presagis.</span></p>
-      <p><span data-fr>Ce que ça veut dire pour vous : je code pour de vrai, pas avec un constructeur de sites par glisser-déposer. Et comme je bâtis encore mon portfolio, mes prix sont plus bas que ceux d'une agence — pour l'instant.</span>
-         <span data-en>What that means for you: I write actual code, not drag-and-drop website builder output. And because I'm still building a portfolio, my prices are below agency rates — for now.</span></p>
+      <p><span data-fr>Ce que ça veut dire pour vous : je code pour de vrai, pas avec un constructeur de sites par glisser-déposer. Et comme je bâtis encore mon portfolio, mes prix sont plus bas que ceux d'une agence — <em>pour l'instant</em>.</span>
+         <span data-en>What that means for you: I write actual code, not drag-and-drop website builder output. And because I'm still building a portfolio, my prices are below agency rates — <em>for now</em>.</span></p>
       <p><span data-fr>Ce que ça veut dire aussi : je ne suis pas une équipe de quinze personnes. Si vous avez besoin d'une refonte de 40 000 $ avec service d'urgence 24 h, je vous recommanderai quelqu'un d'autre.</span>
          <span data-en>What it also means: I'm not a fifteen-person team. If you need a $40,000 rebuild with 24-hour emergency support, I'll point you to someone else.</span></p>
     </div>
@@ -238,15 +473,27 @@ html[lang="en"] [data-en]{display:revert}
 </section>
 
 <section class="section wrap" id="contact">
-  <p class="eyebrow">Contact</p>
-  <h2><span data-fr>Écrivez-moi</span><span data-en>Get in touch</span></h2>
-  <dl class="coords">
-    <dd><span data-fr>Courriel</span><span data-en>Email</span> — <a href="mailto:websiteyou06@gmail.com">websiteyou06@gmail.com</a></dd>
-    <dd><span data-fr>Téléphone</span><span data-en>Phone</span> — <a href="tel:+12638812802">263 881-2802</a></dd>
-    <dd><span data-fr>Autre</span><span data-en>Alternate</span> — <a href="tel:+15146795568">514 679-5568</a></dd>
-    <dd>GitHub — <a href="https://github.com/diegocrisafu">github.com/diegocrisafu</a></dd>
-    <dd><span data-fr>Secteur</span><span data-en>Area</span> — <span data-fr>Île de Montréal, déplacements inclus</span><span data-en>Island of Montreal, visits included</span></dd>
-  </dl>
+  <div class="panel reveal">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h2><span data-fr>Écrivez-moi</span><span data-en>Get in touch</span></h2>
+      <p class="sub">
+        <span data-fr>Ou ne faites rien — je passerai peut-être vous voir avec votre site déjà construit.</span>
+        <span data-en>Or do nothing — I might come by with your site already built.</span>
+      </p>
+      <a class="btn btn-solid" href="mailto:websiteyou06@gmail.com">
+        <span data-fr>Écrire un courriel</span><span data-en>Send an email</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5"/></svg>
+      </a>
+    </div>
+    <dl class="coords">
+      <dd><span class="k"><span data-fr>Courriel</span><span data-en>Email</span></span> <a href="mailto:websiteyou06@gmail.com">websiteyou06@gmail.com</a></dd>
+      <dd><span class="k"><span data-fr>Téléphone</span><span data-en>Phone</span></span> <a href="tel:+12638812802">263 881-2802</a></dd>
+      <dd><span class="k"><span data-fr>Autre</span><span data-en>Alternate</span></span> <a href="tel:+15146795568">514 679-5568</a></dd>
+      <dd><span class="k">GitHub</span> <a href="https://github.com/diegocrisafu">github.com/diegocrisafu</a></dd>
+      <dd><span class="k"><span data-fr>Secteur</span><span data-en>Area</span></span> <span data-fr>Île de Montréal, déplacements inclus</span><span data-en>Island of Montreal, visits included</span></dd>
+    </dl>
+  </div>
 </section>
 </main>
 
@@ -270,6 +517,28 @@ try{
   var saved = localStorage.getItem('w4y-lang');
   if(saved === 'en'){ document.querySelector('[data-lang="en"]').click(); }
 }catch(e){}
+
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced || !('IntersectionObserver' in window)){
+    els.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(el){ io.observe(el); });
+  // Failsafe: if nothing has revealed shortly after load, the observer is not
+  // working here -- show everything rather than a blank page.
+  setTimeout(function(){
+    if(!document.querySelector('.reveal.in')){
+      els.forEach(function(el){ el.classList.add('in'); });
+    }
+  }, 1200);
+})();
 </script>
 </body>
 </html>
