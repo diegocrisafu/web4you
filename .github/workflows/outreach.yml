@@ -1,0 +1,130 @@
+name: Outreach
+
+# Two jobs:
+#   validate - runs on every push. Lints the CSV and renders previews. Never sends.
+#   send     - manual only, and you must type SEND into the input box.
+#
+# Deliberately NOT on a schedule. An unattended cron job firing cold email at
+# small businesses is how you end up with a CASL complaint and a blocked domain.
+# Every send should be a decision you made that morning.
+#
+# The real prospect list is NOT in this repo -- the repo is public so Pages can
+# serve the demo, and the list holds real business names, phone numbers and
+# personal notes. Both jobs rebuild outreach/prospects.csv at runtime from the
+# PROSPECTS_CSV secret. With no secret set, CI lints prospects.example.csv so the
+# workflow still proves the tooling works.
+#
+# To load the list:  gh secret set PROSPECTS_CSV < outreach/prospects.csv
+
+on:
+  push:
+    paths:
+      - 'outreach/**'
+  pull_request:
+    paths:
+      - 'outreach/**'
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type SEND to actually transmit. Anything else = dry run.'
+        required: true
+        default: 'dry-run'
+      limit:
+        description: 'Max messages this run'
+        required: true
+        default: '5'
+
+jobs:
+  validate:
+    name: Validate list and preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Materialise the list
+        env:
+          PROSPECTS_CSV: ${{ secrets.PROSPECTS_CSV }}
+        run: |
+          if [ -n "$PROSPECTS_CSV" ]; then
+            printf '%s\n' "$PROSPECTS_CSV" > outreach/prospects.csv
+            echo "Using the private list from the PROSPECTS_CSV secret."
+          else
+            cp outreach/prospects.example.csv outreach/prospects.csv
+            echo "No PROSPECTS_CSV secret set; linting the example list instead."
+          fi
+
+      - name: Validate list
+        run: python outreach/validate.py
+
+      - name: Render previews
+        env:
+          SMTP_HOST: smtp.example.net
+          SMTP_PORT: '587'
+          SMTP_USER: ci
+          SMTP_PASS: ci
+          SENDER_NAME: ${{ vars.SENDER_NAME || 'CI Preview' }}
+          SENDER_EMAIL: ${{ vars.SENDER_EMAIL || 'ci@web4you.ca' }}
+          SENDER_ADDRESS: ${{ vars.SENDER_ADDRESS || 'Montreal, QC' }}
+        run: |
+          cd outreach
+          python send.py --limit 3
+
+  send:
+    name: Send for real
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'SEND'
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: outreach          # add a required reviewer here for a second gate
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Materialise the list
+        env:
+          PROSPECTS_CSV: ${{ secrets.PROSPECTS_CSV }}
+        run: |
+          if [ -z "$PROSPECTS_CSV" ]; then
+            echo "::error::PROSPECTS_CSV secret is not set. Refusing to send."
+            exit 1
+          fi
+          printf '%s\n' "$PROSPECTS_CSV" > outreach/prospects.csv
+
+      # Carries sent_log.csv between runs so nobody gets emailed twice. Caches
+      # are evicted after 7 days of inactivity, so the local log on your laptop
+      # stays the authoritative record.
+      - name: Restore the send log
+        uses: actions/cache@v4
+        with:
+          path: outreach/sent_log.csv
+          key: sent-log-${{ github.run_id }}
+          restore-keys: sent-log-
+
+      - name: Send
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SENDER_NAME: ${{ secrets.SENDER_NAME }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          SENDER_ADDRESS: ${{ secrets.SENDER_ADDRESS }}
+          REPLY_TO: ${{ secrets.REPLY_TO }}
+        run: |
+          cd outreach
+          echo SEND | python send.py --send --limit ${{ github.event.inputs.limit }}
+
+      # Uploaded, never committed. Committing it would publish, on a public repo,
+      # exactly which businesses you cold-emailed and when.
+      - name: Upload the send log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sent-log-${{ github.run_number }}
+          path: outreach/sent_log.csv
+          retention-days: 90
+          if-no-files-found: ignore
