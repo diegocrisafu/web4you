@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>web4you — Sites web pour les ateliers et commerces de Montréal</title>
+<meta name="description" content="Je construis le site avant de vous le présenter. Sites web pour ébénistes, cordonniers, traiteurs et commerces de quartier à Montréal. Français et anglais.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --walnut:#241A15;--walnut-2:#31241D;--maple:#E4D9C6;--maple-dim:#B9AC97;
+  --blueprint:#4E93C4;--brass:#C9A227;--rule:rgba(228,217,198,.16);
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Newsreader',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--walnut);color:var(--maple);
+  font-family:var(--body);font-size:1.06rem;line-height:1.68;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{width:100%;max-width:1060px;margin:0 auto;padding:0 clamp(1.15rem,4vw,2.5rem)}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--blueprint);margin:0 0 1.1rem}
+
+.nav{display:flex;align-items:center;justify-content:space-between;gap:1.2rem;
+  padding:1.6rem 0 1.1rem;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.mark{font-family:var(--display);font-weight:900;font-size:1.15rem;letter-spacing:.02em}
+.mark b{color:var(--blueprint)}
+.langs{display:flex;gap:.35rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em}
+.langs button{background:none;border:1px solid var(--rule);color:var(--maple-dim);
+  font:inherit;padding:.35rem .7rem;cursor:pointer;text-transform:uppercase}
+.langs button[aria-pressed="true"]{border-color:var(--blueprint);color:var(--walnut);
+  background:var(--blueprint);font-weight:500}
+.langs button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+.hero{padding:clamp(3rem,7vw,5rem) 0 clamp(2rem,4vw,3rem)}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(2.1rem,5.4vw,3.5rem);
+  line-height:1.0;letter-spacing:-.022em;margin:0 0 1.5rem;max-width:22ch}
+h1 .blue{color:var(--blueprint)}
+.lede{font-size:1.16rem;color:var(--maple-dim);max-width:52ch;margin:0 0 2.2rem}
+.cta-row{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn{display:inline-block;font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;
+  text-transform:uppercase;text-decoration:none;padding:.85rem 1.5rem;
+  border:1px solid var(--blueprint);color:var(--maple);transition:background .2s,color .2s}
+.btn:hover,.btn:focus-visible{background:var(--blueprint);color:var(--walnut)}
+.btn-solid{background:var(--blueprint);color:var(--walnut);font-weight:500}
+.btn-solid:hover,.btn-solid:focus-visible{background:var(--maple);border-color:var(--maple)}
+
+.section{padding:clamp(2.75rem,5.5vw,4.25rem) 0;border-top:1px solid var(--rule)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,2.6vw,1.75rem);
+  letter-spacing:-.01em;line-height:1.14;margin:0 0 1.5rem}
+h3{font-family:var(--display);font-weight:700;font-size:.95rem;letter-spacing:.03em;
+  text-transform:uppercase;margin:0 0 .5rem}
+
+.how{list-style:none;margin:0;padding:0;counter-reset:s}
+.how li{display:grid;grid-template-columns:auto 1fr;gap:1.4rem;padding:1.3rem 0;
+  border-top:1px solid var(--rule);align-items:start}
+.how li:last-child{border-bottom:1px solid var(--rule)}
+.how .n{font-family:var(--mono);font-size:.78rem;color:var(--blueprint);padding-top:.3rem}
+.how p{margin:0;color:var(--maple-dim);max-width:58ch}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem}
+.card{border:1px solid var(--rule);background:var(--walnut-2);padding:1.5rem;
+  display:flex;flex-direction:column}
+.card.pick{border-color:var(--blueprint)}
+.card .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brass);margin:0 0 .8rem;min-height:1em}
+.price{font-family:var(--display);font-weight:900;font-size:1.9rem;
+  line-height:1;margin:0 0 .3rem}
+.price small{font-family:var(--mono);font-weight:400;font-size:.65rem;
+  letter-spacing:.1em;color:var(--maple-dim);display:block;margin-top:.5rem}
+.card ul{list-style:none;margin:1.1rem 0 0;padding:0;font-size:.95rem;
+  color:var(--maple-dim);flex:1}
+.card li{padding-left:1.1rem;position:relative;margin-bottom:.45rem}
+.card li::before{content:"—";position:absolute;left:0;color:var(--blueprint)}
+
+.demo-link{display:block;border:1px solid var(--rule);background:var(--walnut-2);
+  padding:1.6rem;text-decoration:none;transition:border-color .2s}
+.demo-link:hover,.demo-link:focus-visible{border-color:var(--blueprint)}
+.demo-link .meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--blueprint);margin-bottom:.7rem}
+.demo-link p{margin:.4rem 0 0;color:var(--maple-dim);font-size:.97rem}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);
+  gap:clamp(1.5rem,4vw,3.2rem)}
+.two p{margin:0 0 1rem;max-width:60ch}
+.two p:last-child{margin-bottom:0}
+
+.coords{font-family:var(--mono);font-size:.85rem;line-height:2.1;letter-spacing:.03em}
+.coords a{color:var(--blueprint);text-decoration:none}
+.coords a:hover{text-decoration:underline}
+
+footer{border-top:1px solid var(--rule);padding:1.9rem 0 2.6rem;font-family:var(--mono);
+  font-size:.7rem;letter-spacing:.08em;color:var(--maple-dim);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;text-transform:uppercase}
+
+[data-en]{display:none}
+html[lang="en"] [data-fr]{display:none}
+html[lang="en"] [data-en]{display:revert}
+
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <nav class="nav">
+    <div class="mark">web<b>4</b>you</div>
+    <div class="langs" role="group" aria-label="Langue / Language">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="hero wrap">
+  <p class="eyebrow">
+    <span data-fr>Montréal · Français et anglais</span>
+    <span data-en>Montreal · English and French</span>
+  </p>
+  <h1>
+    <span data-fr>Je construis le site <span class="blue">avant</span> de vous le montrer.</span>
+    <span data-en>I build the site <span class="blue">before</span> I show it to you.</span>
+  </h1>
+  <p class="lede">
+    <span data-fr>Pas de présentation, pas de contrat à signer pour voir quelque chose. Je passe à l'atelier avec une maquette réelle de votre commerce sur mon téléphone. Vous regardez, vous me dites ce qui ne va pas. Si ça ne vous intéresse pas, vous n'avez rien perdu.</span>
+    <span data-en>No pitch deck, no contract before you see anything. I come by the shop with a real working mockup of your business on my phone. You look at it and tell me what's wrong with it. If you're not interested, you've lost nothing.</span>
+  </p>
+  <div class="cta-row">
+    <a class="btn btn-solid" href="demos/ebenisterie.html">
+      <span data-fr>Voir une démo</span><span data-en>See a demo</span>
+    </a>
+    <a class="btn" href="#tarifs"><span data-fr>Tarifs</span><span data-en>Pricing</span></a>
+  </div>
+</section>
+
+<section class="section wrap">
+  <p class="eyebrow"><span data-fr>Démo</span><span data-en>Demo</span></p>
+  <h2><span data-fr>Un exemple complet</span><span data-en>A complete example</span></h2>
+  <a class="demo-link" href="demos/ebenisterie.html">
+    <div class="meta">Atelier Rivard — <span data-fr>ébénisterie (fictive)</span><span data-en>cabinetmaker (fictional)</span></div>
+    <h3><span data-fr>Site d'ébénisterie sur mesure</span><span data-en>Custom cabinetmaking site</span></h3>
+    <p>
+      <span data-fr>Plan d'atelier coté en page d'accueil, étapes du projet avec échéancier et paiements, réalisations par essence de bois, formulaire de devis. Fonctionne sur téléphone. Aucun plugin, aucun abonnement mensuel.</span>
+      <span data-en>Measured shop drawing on the landing page, project stages with timeline and payment schedule, past work sorted by wood species, quote form. Works on a phone. No plugins, no monthly subscription.</span>
+    </p>
+  </a>
+</section>
+
+<section class="section wrap">
+  <p class="eyebrow"><span data-fr>Déroulement</span><span data-en>How it works</span></p>
+  <h2><span data-fr>Quatre étapes</span><span data-en>Four steps</span></h2>
+  <ol class="how">
+    <li><span class="n">01</span><div>
+      <h3><span data-fr>Je construis</span><span data-en>I build</span></h3>
+      <p><span data-fr>À partir de vos photos Google, de vos avis et de ce que vous faites. Trois heures de mon temps, zéro du vôtre.</span>
+         <span data-en>From your Google photos, your reviews, and what you actually do. Three hours of my time, none of yours.</span></p>
+    </div></li>
+    <li><span class="n">02</span><div>
+      <h3><span data-fr>Je passe vous voir</span><span data-en>I come by</span></h3>
+      <p><span data-fr>Dix minutes à l'atelier. Vous regardez le site sur mon téléphone et vous me dites ce qui est faux.</span>
+         <span data-en>Ten minutes at the shop. You look at the site on my phone and tell me what's wrong.</span></p>
+    </div></li>
+    <li><span class="n">03</span><div>
+      <h3><span data-fr>On corrige</span><span data-en>We fix it</span></h3>
+      <p><span data-fr>Vos vraies photos, vos vrais prix, votre vrai vocabulaire. C'est là que le site devient le vôtre.</span>
+         <span data-en>Your real photos, your real prices, your own words. This is where it becomes your site.</span></p>
+    </div></li>
+    <li><span class="n">04</span><div>
+      <h3><span data-fr>Mise en ligne</span><span data-en>It goes live</span></h3>
+      <p><span data-fr>Sur votre propre nom de domaine, relié à votre fiche Google. Vous en êtes propriétaire — code inclus.</span>
+         <span data-en>On your own domain name, linked to your Google listing. You own it outright, source code included.</span></p>
+    </div></li>
+  </ol>
+</section>
+
+<section class="section wrap" id="tarifs">
+  <p class="eyebrow"><span data-fr>Tarifs</span><span data-en>Pricing</span></p>
+  <h2><span data-fr>Prix fixes, annoncés d'avance</span><span data-en>Fixed prices, stated up front</span></h2>
+  <div class="cards">
+    <div class="card">
+      <p class="tag"><span data-fr>Fiche Google</span><span data-en>Google listing</span></p>
+      <p class="price">150&nbsp;$<small><span data-fr>une seule fois</span><span data-en>one time</span></small></p>
+      <ul>
+        <li><span data-fr>Heures et adresse corrigées</span><span data-en>Hours and address corrected</span></li>
+        <li><span data-fr>Photos et description</span><span data-en>Photos and description</span></li>
+        <li><span data-fr>Réponses aux avis</span><span data-en>Review responses</span></li>
+        <li><span data-fr>Fait en une journée</span><span data-en>Done in a day</span></li>
+      </ul>
+    </div>
+    <div class="card pick">
+      <p class="tag"><span data-fr>Le plus courant</span><span data-en>Most common</span></p>
+      <p class="price">900&nbsp;$<small><span data-fr>une seule fois</span><span data-en>one time</span></small></p>
+      <ul>
+        <li><span data-fr>Site d'une à trois pages</span><span data-en>One to three page site</span></li>
+        <li><span data-fr>Français et anglais</span><span data-en>French and English</span></li>
+        <li><span data-fr>Formulaire de devis</span><span data-en>Quote form</span></li>
+        <li><span data-fr>Fiche Google incluse</span><span data-en>Google listing included</span></li>
+        <li><span data-fr>Hébergement gratuit la 1re année</span><span data-en>Free hosting, first year</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="tag"><span data-fr>Galerie de projets</span><span data-en>Project gallery</span></p>
+      <p class="price">1 800&nbsp;$<small><span data-fr>une seule fois</span><span data-en>one time</span></small></p>
+      <ul>
+        <li><span data-fr>Tout ce qui précède</span><span data-en>Everything above</span></li>
+        <li><span data-fr>Galerie avant / après</span><span data-en>Before and after gallery</span></li>
+        <li><span data-fr>Vous ajoutez vos projets seul</span><span data-en>You add projects yourself</span></li>
+        <li><span data-fr>Séance photo de l'atelier</span><span data-en>Workshop photo session</span></li>
+      </ul>
+    </div>
+  </div>
+  <p style="font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--maple-dim);margin-top:1.6rem">
+    <span data-fr>Hébergement après la première année : 60 $/an. Aucun abonnement obligatoire. Le code vous appartient.</span>
+    <span data-en>Hosting after year one: $60/year. No mandatory subscription. The code is yours.</span>
+  </p>
+</section>
+
+<section class="section wrap">
+  <div class="two">
+    <div>
+      <p class="eyebrow"><span data-fr>Qui je suis</span><span data-en>Who I am</span></p>
+      <h2><span data-fr>Un étudiant, et je le dis</span><span data-en>A student, and I say so</span></h2>
+    </div>
+    <div>
+      <p><span data-fr>Je m'appelle Diego. Je termine un baccalauréat en informatique à Concordia et je travaille comme développeur en stage chez McKesson. J'ai déjà écrit du code pour des simulateurs de vol chez CAE et des jumeaux numériques chez Presagis.</span>
+         <span data-en>My name is Diego. I'm finishing a computer science degree at Concordia and working as a software development intern at McKesson. I've written code for flight simulators at CAE and digital twins at Presagis.</span></p>
+      <p><span data-fr>Ce que ça veut dire pour vous : je code pour de vrai, pas avec un constructeur de sites par glisser-déposer. Et comme je bâtis encore mon portfolio, mes prix sont plus bas que ceux d'une agence — pour l'instant.</span>
+         <span data-en>What that means for you: I write actual code, not drag-and-drop website builder output. And because I'm still building a portfolio, my prices are below agency rates — for now.</span></p>
+      <p><span data-fr>Ce que ça veut dire aussi : je ne suis pas une équipe de quinze personnes. Si vous avez besoin d'une refonte de 40 000 $ avec service d'urgence 24 h, je vous recommanderai quelqu'un d'autre.</span>
+         <span data-en>What it also means: I'm not a fifteen-person team. If you need a $40,000 rebuild with 24-hour emergency support, I'll point you to someone else.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="contact">
+  <p class="eyebrow">Contact</p>
+  <h2><span data-fr>Écrivez-moi</span><span data-en>Get in touch</span></h2>
+  <dl class="coords">
+    <dd><span data-fr>Courriel</span><span data-en>Email</span> — <a href="mailto:websiteyou06@gmail.com">websiteyou06@gmail.com</a></dd>
+    <dd><span data-fr>Téléphone</span><span data-en>Phone</span> — <a href="tel:+12638812802">263 881-2802</a></dd>
+    <dd><span data-fr>Autre</span><span data-en>Alternate</span> — <a href="tel:+15146795568">514 679-5568</a></dd>
+    <dd>GitHub — <a href="https://github.com/diegocrisafu">github.com/diegocrisafu</a></dd>
+    <dd><span data-fr>Secteur</span><span data-en>Area</span> — <span data-fr>Île de Montréal, déplacements inclus</span><span data-en>Island of Montreal, visits included</span></dd>
+  </dl>
+</section>
+</main>
+
+<footer class="wrap">
+  <span>web4you — Montréal</span>
+  <span><span data-fr>Fait à la main, sans gabarit</span><span data-en>Hand-built, no templates</span></span>
+</footer>
+
+<script>
+document.querySelectorAll('.langs button').forEach(function(b){
+  b.addEventListener('click', function(){
+    var lang = b.dataset.lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.langs button').forEach(function(o){
+      o.setAttribute('aria-pressed', String(o.dataset.lang === lang));
+    });
+    try{ localStorage.setItem('w4y-lang', lang); }catch(e){}
+  });
+});
+try{
+  var saved = localStorage.getItem('w4y-lang');
+  if(saved === 'en'){ document.querySelector('[data-lang="en"]').click(); }
+}catch(e){}
+</script>
+</body>
+</html>

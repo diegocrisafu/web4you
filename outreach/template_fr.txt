@@ -1,0 +1,25 @@
+Bonjour {contact_name},
+
+Je m'appelle Diego, je termine mon bac en informatique à Concordia et je construis
+des sites web pour les ateliers et commerces de Montréal.
+
+Je vous écris parce que {hook}.
+
+Je fonctionne à l'envers de la plupart des gens : je construis d'abord, je demande
+ensuite. J'ai déjà monté une démo complète pour un atelier d'ébénisterie que vous
+pouvez regarder ici, ça prend deux minutes :
+
+    https://diegocrisafu.github.io/web4you/demos/ebenisterie.html
+
+Si le genre de résultat vous parle, je peux faire la même chose pour {business}
+avec vos vraies photos et vos vrais prix, et vous la montrer avant que vous
+décidiez quoi que ce soit. Aucun engagement, aucun acompte pour voir la maquette.
+
+Mes prix sont affichés d'avance : 900 $ pour un site d'une à trois pages en
+français et en anglais, 150 $ si vous voulez seulement que je répare votre fiche
+Google. Une seule fois, pas d'abonnement, et le code vous appartient.
+
+Si ça ne vous intéresse pas, dites-le simplement et je ne reviendrai pas là-dessus.
+
+Bonne journée,
+Diego

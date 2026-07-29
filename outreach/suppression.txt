@@ -1,0 +1,4 @@
+# One email address per line. Never contacted again.
+# Add with: python send.py --unsubscribe someone@example.com
+# Anyone who asks out goes here immediately -- CASL gives you 10 business days,
+# but there is no reason to use them.

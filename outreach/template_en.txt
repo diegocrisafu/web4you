@@ -1,0 +1,25 @@
+Hi {contact_name},
+
+I'm Diego. I'm finishing a computer science degree at Concordia and I build
+websites for Montreal workshops and small trades.
+
+I'm writing because {hook}.
+
+I work backwards from most people: I build first and ask afterwards. I've already
+put together a full demo for a cabinetmaking shop that you can look at in about
+two minutes:
+
+    https://diegocrisafu.github.io/web4you/demos/ebenisterie.html
+
+If that kind of result makes sense to you, I'll build the same thing for
+{business} using your real photos and your real prices, and show it to you before
+you commit to anything. No deposit to see the mockup.
+
+My prices are posted up front: $900 for a one-to-three page site in English and
+French, or $150 if you only want your Google listing fixed. One time, no
+subscription, and you own the code.
+
+If it's not for you, just say so and I won't follow up again.
+
+Thanks for your time,
+Diego

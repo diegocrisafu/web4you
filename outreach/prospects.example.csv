@@ -1,0 +1,3 @@
+business,contact_name,email,lang,category,area,phone,consent_basis,template,subject,hook
+Atelier Exemple,Prénom,,fr,Ébénisterie,Rosemont,514-555-0100,,template_fr.txt,,"votre fiche Google n'a pas de photos de vos réalisations"
+Example Upholstery,Firstname,,en,Rembourrage,NDG,514-555-0101,,template_en.txt,,"you already work with repeat designer clients, and designers send links to each other"

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier Rivard — Ébénisterie sur mesure, Montréal</title>
+<meta name="description" content="Cuisines, salles de bain et mobilier sur mesure. Atelier d'ébénisterie à Montréal. Bois massif, plans d'atelier, installation incluse.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --walnut:#241A15;
+  --walnut-2:#31241D;
+  --walnut-3:#3E2E25;
+  --maple:#E4D9C6;
+  --maple-dim:#B9AC97;
+  --blueprint:#4E93C4;
+  --blueprint-deep:#2E6E9E;
+  --brass:#C9A227;
+  --rule:rgba(228,217,198,.16);
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Newsreader',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--walnut);color:var(--maple);
+  font-family:var(--body);font-size:1.06rem;line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+.wrap{width:100%;max-width:1140px;margin:0 auto;padding:0 clamp(1.15rem,4vw,2.5rem)}
+
+/* ---- demo ribbon ---- */
+.ribbon{
+  background:var(--brass);color:#231a10;font-family:var(--mono);
+  font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;
+  text-align:center;padding:.5rem 1rem;
+}
+.ribbon b{font-weight:500}
+
+/* ---- eyebrow / labels ---- */
+.eyebrow{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--blueprint);margin:0 0 1.1rem;
+}
+
+/* ---- nav ---- */
+.nav{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1.5rem;
+  padding:1.6rem 0 1.1rem;border-bottom:1px solid var(--rule);flex-wrap:wrap;
+}
+.mark{
+  font-family:var(--display);font-weight:900;font-size:1.02rem;
+  letter-spacing:.16em;text-transform:uppercase;line-height:1.1;
+}
+.mark span{display:block;font-family:var(--mono);font-weight:400;font-size:.62rem;
+  letter-spacing:.22em;color:var(--maple-dim);margin-top:.3rem}
+.nav-links{display:flex;gap:1.6rem;flex-wrap:wrap;font-family:var(--mono);
+  font-size:.74rem;letter-spacing:.1em;text-transform:uppercase}
+.nav-links a{text-decoration:none;color:var(--maple-dim);transition:color .2s}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--maple)}
+
+/* ---- hero ---- */
+.hero{padding:clamp(3rem,7vw,5.5rem) 0 clamp(2rem,5vw,3.5rem)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+  gap:clamp(2rem,5vw,4rem);align-items:center}
+h1{
+  font-family:var(--display);font-weight:900;
+  font-size:clamp(2.3rem,5.6vw,3.9rem);line-height:.98;letter-spacing:-.022em;
+  text-transform:uppercase;margin:0 0 1.4rem;
+}
+h1 em{
+  display:block;font-family:var(--body);font-style:italic;font-weight:300;
+  text-transform:none;letter-spacing:normal;color:var(--blueprint);
+  font-size:clamp(1.25rem,2.6vw,1.7rem);line-height:1.25;margin-top:.6rem;
+}
+.lede{font-size:1.12rem;color:var(--maple-dim);max-width:34ch;margin:0 0 2rem}
+
+.cta-row{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}
+.btn{
+  display:inline-block;font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;
+  text-transform:uppercase;text-decoration:none;padding:.85rem 1.5rem;
+  border:1px solid var(--blueprint);color:var(--maple);transition:background .2s,color .2s;
+}
+.btn:hover,.btn:focus-visible{background:var(--blueprint);color:var(--walnut)}
+.btn-solid{background:var(--blueprint);color:var(--walnut);font-weight:500}
+.btn-solid:hover,.btn-solid:focus-visible{background:var(--maple);border-color:var(--maple)}
+
+/* ---- the signature: shop drawing ---- */
+.drawing{width:100%;height:auto}
+.drawing .paper{fill:var(--walnut-2)}
+.drawing .carcass{fill:none;stroke:var(--maple);stroke-width:1.6}
+.drawing .panel{fill:none;stroke:var(--maple-dim);stroke-width:1}
+.drawing .hardware{fill:var(--brass)}
+.drawing .grain{stroke:rgba(228,217,198,.13);stroke-width:.6}
+.drawing .dim{stroke:var(--blueprint);stroke-width:.8}
+.drawing .dimtext{fill:var(--blueprint);font-family:var(--mono);font-size:9px;letter-spacing:.04em}
+.drawing .note{fill:var(--maple-dim);font-family:var(--mono);font-size:8px;letter-spacing:.08em}
+
+/* draw-on animation */
+.drawing .ink{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.7s ease-out forwards}
+.drawing .ink.d2{animation-delay:.35s}
+.drawing .ink.d3{animation-delay:.6s}
+.drawing .fade{opacity:0;animation:fadein .7s ease-out 1.25s forwards}
+.drawing .fade.f2{animation-delay:1.5s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadein{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .drawing .ink{stroke-dashoffset:0;animation:none}
+  .drawing .fade{opacity:1;animation:none}
+}
+
+/* ---- generic section ---- */
+.section{padding:clamp(3rem,6vw,4.75rem) 0;border-top:1px solid var(--rule)}
+h2{
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.35rem,2.7vw,1.85rem);letter-spacing:-.01em;line-height:1.1;
+  margin:0 0 1.6rem;
+}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);
+  gap:clamp(1.6rem,4vw,3.5rem)}
+.two p{margin:0 0 1.05rem;max-width:60ch}
+.two p:last-child{margin-bottom:0}
+
+/* ---- process: a real sequence, so it is numbered ---- */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.steps li{
+  display:grid;grid-template-columns:auto 1fr;gap:1.4rem;
+  padding:1.35rem 0;border-top:1px solid var(--rule);align-items:start;
+}
+.steps li:last-child{border-bottom:1px solid var(--rule)}
+.steps .num{font-family:var(--mono);font-size:.78rem;color:var(--blueprint);padding-top:.28rem}
+.steps h3{font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:.95rem;letter-spacing:.04em;margin:0 0 .4rem}
+.steps p{margin:0;color:var(--maple-dim);font-size:1rem;max-width:56ch}
+.steps .when{font-family:var(--mono);font-size:.68rem;color:var(--maple-dim);
+  letter-spacing:.09em;text-transform:uppercase;margin-top:.5rem;display:block}
+
+/* ---- work grid ---- */
+.work{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.4rem}
+.piece{border:1px solid var(--rule);background:var(--walnut-2);padding:1.3rem}
+.piece .swatch{height:112px;margin:0 0 1.05rem;position:relative;overflow:hidden}
+.piece h3{font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:.88rem;letter-spacing:.05em;margin:0 0 .45rem}
+.piece p{margin:0;font-size:.95rem;color:var(--maple-dim)}
+.piece dl{margin:1rem 0 0;font-family:var(--mono);font-size:.7rem;
+  color:var(--maple-dim);letter-spacing:.04em;display:grid;
+  grid-template-columns:auto 1fr;gap:.3rem .9rem}
+.piece dt{color:var(--blueprint)}
+.piece dd{margin:0}
+
+/* wood swatches, built from gradients rather than stock photos */
+.w-walnut{background:
+  repeating-linear-gradient(96deg,rgba(0,0,0,.22) 0 2px,transparent 2px 11px),
+  linear-gradient(160deg,#4A3225,#2C1D14)}
+.w-maple{background:
+  repeating-linear-gradient(93deg,rgba(120,90,50,.16) 0 1px,transparent 1px 9px),
+  linear-gradient(160deg,#C9A97B,#9C7F55)}
+.w-oak{background:
+  repeating-linear-gradient(88deg,rgba(0,0,0,.16) 0 3px,transparent 3px 14px),
+  linear-gradient(160deg,#8A6A45,#5C4429)}
+
+/* ---- quote ---- */
+.quote{max-width:44ch}
+.quote blockquote{margin:0;font-size:clamp(1.2rem,2.4vw,1.55rem);
+  line-height:1.42;font-style:italic;font-weight:300}
+.quote cite{display:block;margin-top:1.1rem;font-family:var(--mono);
+  font-style:normal;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--maple-dim)}
+
+/* ---- contact ---- */
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(1.6rem,4vw,3.5rem)}
+.field{display:block;margin-bottom:1.05rem}
+.field span{display:block;font-family:var(--mono);font-size:.68rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--maple-dim);margin-bottom:.45rem}
+.field input,.field textarea,.field select{
+  width:100%;background:var(--walnut-2);border:1px solid var(--rule);
+  color:var(--maple);font-family:var(--body);font-size:1rem;padding:.7rem .85rem;
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  outline:2px solid var(--blueprint);outline-offset:1px;border-color:var(--blueprint)}
+.field textarea{min-height:104px;resize:vertical}
+.coords{font-family:var(--mono);font-size:.82rem;line-height:2;letter-spacing:.03em}
+.coords a{color:var(--blueprint);text-decoration:none}
+.coords a:hover{text-decoration:underline}
+.coords dt{color:var(--maple-dim);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;margin-top:1.1rem}
+.coords dd{margin:0}
+
+footer{border-top:1px solid var(--rule);padding:1.9rem 0 2.6rem;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;
+  color:var(--maple-dim);display:flex;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;text-transform:uppercase}
+
+@media(max-width:840px){
+  .hero-grid,.two,.contact-grid{grid-template-columns:1fr}
+  .hero-grid{gap:2.4rem}
+  .lede{max-width:none}
+}
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <b>Démo</b> — site d'exemple construit par web4you. Atelier Rivard est une entreprise fictive.
+</div>
+
+<header class="wrap">
+  <nav class="nav" aria-label="Principal">
+    <div class="mark">Atelier&nbsp;Rivard<span>Ébénisterie · Montréal</span></div>
+    <div class="nav-links">
+      <a href="#metier">Le métier</a>
+      <a href="#etapes">Étapes</a>
+      <a href="#realisations">Réalisations</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow">Atelier depuis 1998</p>
+      <h1>Bois massif,<br>mesuré chez&nbsp;vous
+        <em>Cuisines, salles de bain et mobilier sur mesure, dessinés et fabriqués à Montréal.</em>
+      </h1>
+      <p class="lede">Chaque projet commence par un plan d'atelier coté. Vous voyez exactement ce que vous recevez avant qu'on coupe une seule planche.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="#contact">Demander un devis</a>
+        <a class="btn" href="#realisations">Voir les réalisations</a>
+      </div>
+    </div>
+
+    <!-- SIGNATURE: a measured shop elevation, drawn on load -->
+    <figure style="margin:0">
+      <svg class="drawing" viewBox="0 0 520 400" role="img"
+           aria-label="Plan d'atelier coté d'un îlot de cuisine en noyer, 2400 mm de largeur sur 900 mm de hauteur.">
+        <rect class="paper" x="0" y="0" width="520" height="400"/>
+
+        <!-- grain hatching inside carcass -->
+        <g class="grain fade">
+          <line x1="92" y1="128" x2="92" y2="316"/><line x1="118" y1="128" x2="118" y2="316"/>
+          <line x1="144" y1="128" x2="144" y2="316"/><line x1="170" y1="128" x2="170" y2="316"/>
+          <line x1="196" y1="128" x2="196" y2="316"/><line x1="222" y1="128" x2="222" y2="316"/>
+          <line x1="248" y1="128" x2="248" y2="316"/><line x1="274" y1="128" x2="274" y2="316"/>
+          <line x1="300" y1="128" x2="300" y2="316"/><line x1="326" y1="128" x2="326" y2="316"/>
+          <line x1="352" y1="128" x2="352" y2="316"/><line x1="378" y1="128" x2="378" y2="316"/>
+          <line x1="404" y1="128" x2="404" y2="316"/><line x1="430" y1="128" x2="430" y2="316"/>
+        </g>
+
+        <!-- countertop -->
+        <path class="carcass ink" d="M62 116 H458 V128 H62 Z"/>
+        <!-- carcass -->
+        <path class="carcass ink d2" d="M74 128 H446 V330 H74 Z"/>
+        <!-- drawer + door divisions -->
+        <g class="panel ink d3">
+          <path d="M74 174 H446"/>
+          <path d="M74 220 H446"/>
+          <path d="M260 220 V330"/>
+          <path d="M74 316 H446"/>
+        </g>
+        <!-- brass hardware -->
+        <g class="hardware fade f2">
+          <rect x="228" y="148" width="64" height="4" rx="2"/>
+          <rect x="228" y="194" width="64" height="4" rx="2"/>
+          <circle cx="240" cy="268" r="4"/>
+          <circle cx="280" cy="268" r="4"/>
+        </g>
+
+        <!-- ---- dimension lines ---- -->
+        <g class="dim fade f2">
+          <!-- overall width, below -->
+          <line x1="62" y1="356" x2="458" y2="356"/>
+          <line x1="62" y1="348" x2="62" y2="364"/>
+          <line x1="458" y1="348" x2="458" y2="364"/>
+          <line x1="62" y1="356" x2="72" y2="352"/><line x1="62" y1="356" x2="72" y2="360"/>
+          <line x1="458" y1="356" x2="448" y2="352"/><line x1="458" y1="356" x2="448" y2="360"/>
+          <!-- extension lines -->
+          <line x1="62" y1="130" x2="62" y2="344" stroke-dasharray="2 4"/>
+          <line x1="458" y1="130" x2="458" y2="344" stroke-dasharray="2 4"/>
+
+          <!-- overall height, right -->
+          <line x1="484" y1="116" x2="484" y2="330"/>
+          <line x1="476" y1="116" x2="492" y2="116"/>
+          <line x1="476" y1="330" x2="492" y2="330"/>
+          <line x1="484" y1="116" x2="480" y2="126"/><line x1="484" y1="116" x2="488" y2="126"/>
+          <line x1="484" y1="330" x2="480" y2="320"/><line x1="484" y1="330" x2="488" y2="320"/>
+          <line x1="460" y1="116" x2="472" y2="116" stroke-dasharray="2 4"/>
+          <line x1="448" y1="330" x2="472" y2="330" stroke-dasharray="2 4"/>
+
+          <!-- drawer height, left -->
+          <line x1="42" y1="128" x2="42" y2="174"/>
+          <line x1="34" y1="128" x2="50" y2="128"/>
+          <line x1="34" y1="174" x2="50" y2="174"/>
+          <line x1="56" y1="174" x2="70" y2="174" stroke-dasharray="2 4"/>
+
+          <!-- counter thickness leader -->
+          <line x1="470" y1="98" x2="430" y2="98"/>
+          <line x1="430" y1="98" x2="424" y2="120"/>
+        </g>
+
+        <g class="dimtext fade f2">
+          <text x="260" y="374" text-anchor="middle">2400 mm</text>
+          <text x="502" y="227" text-anchor="middle" transform="rotate(90 502 227)">900 mm</text>
+          <text x="26" y="155" text-anchor="middle" transform="rotate(-90 26 155)">180</text>
+          <text x="474" y="94">38 mm</text>
+        </g>
+
+        <g class="note fade f2">
+          <text x="62" y="34">ÎLOT DE CUISINE — ÉLÉVATION AVANT</text>
+          <text x="62" y="50">NOYER NOIR MASSIF · HUILE-CIRE MATE</text>
+          <text x="62" y="66">ÉCH. 1:20 · DESSIN N° AR-2418</text>
+          <text x="322" y="34">TOLÉRANCE ±1 mm</text>
+          <text x="322" y="50">QUINCAILLERIE LAITON</text>
+          <text x="322" y="66">TIROIRS À FERMETURE DOUCE</text>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<section class="section wrap" id="metier">
+  <div class="two">
+    <div>
+      <p class="eyebrow">Le métier</p>
+      <h2>Un atelier,<br>pas un&nbsp;catalogue</h2>
+    </div>
+    <div>
+      <p>Nous fabriquons tout sur place, rue Beaubien. Pas de sous-traitance, pas de panneaux commandés d'ailleurs et assemblés à la hâte. Le noyer, l'érable et le chêne blanc arrivent en planches brutes et repartent en cuisine.</p>
+      <p>La différence se voit surtout aux endroits que personne ne regarde : le fond d'un tiroir, l'arrière d'un caisson, la façon dont deux portes se rencontrent après trois hivers montréalais. C'est là que le travail tient ou ne tient pas.</p>
+      <p>Si vous cherchez le prix le plus bas, nous ne serons pas le bon atelier. Si vous voulez un meuble que votre fille pourra faire réparer dans quarante ans, appelez-nous.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="etapes">
+  <p class="eyebrow">Comment ça se passe</p>
+  <h2>Quatre étapes,<br>huit à douze&nbsp;semaines</h2>
+  <ol class="steps">
+    <li>
+      <span class="num">01</span>
+      <div>
+        <h3>Rencontre et relevé</h3>
+        <p>On se déplace chez vous, on mesure la pièce et on discute usage avant esthétique. Combien de personnes cuisinent, ce qui vous agace dans la cuisine actuelle, où va le compost.</p>
+        <span class="when">Gratuit · 1 h à 2 h</span>
+      </div>
+    </li>
+    <li>
+      <span class="num">02</span>
+      <div>
+        <h3>Dessin d'atelier</h3>
+        <p>Vous recevez des élévations cotées comme celle en haut de cette page, plus les échantillons de bois et de finition. Rien n'est coupé avant votre approbation écrite.</p>
+        <span class="when">2 à 3 semaines · 15 % du devis</span>
+      </div>
+    </li>
+    <li>
+      <span class="num">03</span>
+      <div>
+        <h3>Fabrication</h3>
+        <p>Débit, assemblage, finition. Vous êtes bienvenu à l'atelier pendant cette période — la plupart des clients passent au moins une fois voir les caissons montés.</p>
+        <span class="when">5 à 8 semaines · 50 % au début</span>
+      </div>
+    </li>
+    <li>
+      <span class="num">04</span>
+      <div>
+        <h3>Installation</h3>
+        <p>Deux à trois jours sur place. On ajuste les portes, on nivelle, on nettoie. Le solde est payable une fois que vous avez ouvert chaque tiroir.</p>
+        <span class="when">2 à 3 jours · solde à la fin</span>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section class="section wrap" id="realisations">
+  <p class="eyebrow">Réalisations récentes</p>
+  <h2>Trois projets,<br>trois essences</h2>
+  <div class="work">
+    <article class="piece">
+      <div class="swatch w-walnut"></div>
+      <h3>Cuisine Outremont</h3>
+      <p>Îlot de 2,4 m, façades sans poignée, quincaillerie laiton apparente.</p>
+      <dl>
+        <dt>Essence</dt><dd>Noyer noir</dd>
+        <dt>Finition</dt><dd>Huile-cire mate</dd>
+        <dt>Durée</dt><dd>10 semaines</dd>
+      </dl>
+    </article>
+    <article class="piece">
+      <div class="swatch w-maple"></div>
+      <h3>Bibliothèque Rosemont</h3>
+      <p>Mur complet, 3,1 m de haut, échelle coulissante et banc intégré sous la fenêtre.</p>
+      <dl>
+        <dt>Essence</dt><dd>Érable dur</dd>
+        <dt>Finition</dt><dd>Laque satinée</dd>
+        <dt>Durée</dt><dd>7 semaines</dd>
+      </dl>
+    </article>
+    <article class="piece">
+      <div class="swatch w-oak"></div>
+      <h3>Vanité Villeray</h3>
+      <p>Double lavabo sur pieds tournés, tiroirs à fermeture douce, dessus en pierre.</p>
+      <dl>
+        <dt>Essence</dt><dd>Chêne blanc</dd>
+        <dt>Finition</dt><dd>Vernis à l'eau</dd>
+        <dt>Durée</dt><dd>5 semaines</dd>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<section class="section wrap">
+  <div class="quote">
+    <p class="eyebrow">Ce qu'on nous dit</p>
+    <blockquote>Ils ont refusé mon premier plan. Ils avaient raison — la hauteur du comptoir ne marchait pas pour ma femme. On a redessiné ensemble et c'est la meilleure décision du projet.</blockquote>
+    <cite>Marc D. · Cuisine, Petite-Patrie · 2025</cite>
+  </div>
+</section>
+
+<section class="section wrap" id="contact">
+  <div class="contact-grid">
+    <div>
+      <p class="eyebrow">Devis</p>
+      <h2>Parlez-nous<br>de la pièce</h2>
+      <form onsubmit="event.preventDefault();this.querySelector('.sent').hidden=false;">
+        <label class="field"><span>Nom</span><input type="text" name="nom" required autocomplete="name"></label>
+        <label class="field"><span>Courriel ou téléphone</span><input type="text" name="contact" required></label>
+        <label class="field"><span>Type de projet</span>
+          <select name="type">
+            <option>Cuisine</option><option>Salle de bain</option>
+            <option>Bibliothèque ou rangement</option><option>Mobilier</option>
+            <option>Autre</option>
+          </select>
+        </label>
+        <label class="field"><span>Détails</span><textarea name="details" placeholder="Dimensions approximatives, échéancier, budget envisagé."></textarea></label>
+        <button class="btn btn-solid" type="submit">Envoyer</button>
+        <p class="sent" hidden style="font-family:var(--mono);font-size:.75rem;color:var(--brass);margin-top:1rem;letter-spacing:.06em">
+          DÉMO — aucun message n'a été envoyé.</p>
+      </form>
+    </div>
+    <div>
+      <dl class="coords">
+        <dt>Atelier</dt>
+        <dd>1330 rue Beaubien Est<br>Montréal, QC H2G 1K8</dd>
+        <dt>Téléphone</dt>
+        <dd><a href="tel:+15145550118">514 555-0118</a></dd>
+        <dt>Courriel</dt>
+        <dd><a href="mailto:info@atelierrivard.example">info@atelierrivard.example</a></dd>
+        <dt>Heures</dt>
+        <dd>Mardi au vendredi, 9 h – 17 h<br>Samedi sur rendez-vous<br>Fermé lundi</dd>
+        <dt>Langues</dt>
+        <dd>Français, English</dd>
+        <dt>RBQ</dt>
+        <dd>0000-0000-00</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  <span>Atelier Rivard — entreprise fictive</span>
+  <span>Démo construite par web4you</span>
+</footer>
+
+</body>
+</html>

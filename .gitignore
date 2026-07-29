@@ -1,0 +1,15 @@
+# Credentials
+.env
+
+# Prospect research — real business names, phone numbers and personal notes.
+# This repo is public so GitHub Pages can serve the demo. None of this ships.
+outreach/prospects.csv
+outreach/sent_log.csv
+montreal_prospects.xlsx
+PLAN.md
+
+# Local scratch
+web4you-repo.zip
+__pycache__/
+*.pyc
+.DS_Store
